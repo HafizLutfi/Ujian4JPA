@@ -12,10 +12,14 @@ import com.juaracoding.ujianjpa.entity.Admin;
 import com.juaracoding.ujianjpa.entity.Dosen;
 import com.juaracoding.ujianjpa.entity.Mahasiswa;
 import com.juaracoding.ujianjpa.entity.MataKuliah;
+import com.juaracoding.ujianjpa.entity.Nilai;
+import com.juaracoding.ujianjpa.entity.Pertanyaan;
+import com.juaracoding.ujianjpa.entity.Soal;
 import com.juaracoding.ujianjpa.respository.AdminRespository;
 import com.juaracoding.ujianjpa.respository.DosenRespository;
 import com.juaracoding.ujianjpa.respository.MahasiswaRespository;
 import com.juaracoding.ujianjpa.respository.MatakuliahRespository;
+import com.juaracoding.ujianjpa.respository.NilaiRespository;
 import com.juaracoding.ujianjpa.respository.PertanyaanRespository;
 import com.juaracoding.ujianjpa.respository.SoalRespository;
 
@@ -43,6 +47,9 @@ public class Ujian4JpaApplication implements CommandLineRunner{
 	
 	@Autowired
 	PertanyaanRespository pertanyaanRespository;
+	
+	@Autowired
+	NilaiRespository nilaiRespository;
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
@@ -127,9 +134,42 @@ public class Ujian4JpaApplication implements CommandLineRunner{
 		lstmatkul.add(matakuliah2);
 		lstmatkul.add(matakuliah);
 		this.mataKuliahRespository.saveAll(lstmatkul);
-		*/
 		
-	
+		// cara add soal dan pertanyan
+		Soal soal = new Soal();
+		soal.setNamaSoal("Ujian");
+		soal.setStatus(1);
+		soal.setMataKuliah(matakuliah);
+		
+		
+		Pertanyaan pertanyaan = new Pertanyaan();
+		pertanyaan.setPertanyaan("apa");
+		pertanyaan.setJawaban1("a");
+		pertanyaan.setJawaban2("b");
+		pertanyaan.setJawaban3("c");
+		pertanyaan.setJawaban4("d");
+		
+		Pertanyaan pertanyaan2 = new Pertanyaan();
+		pertanyaan2.setPertanyaan("apa");
+		pertanyaan2.setJawaban1("a");
+		pertanyaan2.setJawaban2("b");
+		pertanyaan2.setJawaban3("c");
+		pertanyaan2.setJawaban4("d");
+		
+		List<Pertanyaan> lstTanya = new ArrayList<Pertanyaan>();
+		lstTanya.add(pertanyaan2);
+		lstTanya.add(pertanyaan);
+		
+		soal.setLstPertanyaan(lstTanya);
+		this.soalRespository.save(soal);
+		
+		Nilai nilai = new Nilai();
+		nilai.setNilai(10);
+		
+		nilai.setMahasiswa(mahasiswa);
+		nilai.setSoal(soal);
+		this.nilaiRespository.save(nilai);
+		*/
 	}
 
 }
